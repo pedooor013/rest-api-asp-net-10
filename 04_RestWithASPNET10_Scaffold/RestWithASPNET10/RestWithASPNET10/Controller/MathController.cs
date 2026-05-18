@@ -22,7 +22,12 @@ namespace RestWithASPNET10.Controller
         private decimal ConvertToDecimal(string strNumber)
         {
             decimal decimalValue;
-            if (decimal.TryParse(strNumber, out decimalValue))
+            if (decimal.TryParse(
+                 strNumber,
+                 System.Globalization.NumberStyles.Any,
+                 System.Globalization.NumberFormatInfo.InvariantInfo,
+                 out decimalValue)
+                )
             {
                 return decimalValue;
             }
