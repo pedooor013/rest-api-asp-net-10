@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
+using RestWithASPNET10.Controller.Convert;
 
 namespace RestWithASPNET10.Controller
 {
@@ -8,43 +9,77 @@ namespace RestWithASPNET10.Controller
     public class MathController : ControllerBase
     {
         [HttpGet("sum/{firstNumber}/{secondNumber}")]
-        public IActionResult Get(string firstNumber, string secondNumber)
+        public IActionResult SumGet(string firstNumber, string secondNumber)
         {
-
-            if (IsNumeric(firstNumber) && IsNumeric(secondNumber)) {
+            if (Convert.IsNumeric(firstNumber) && IsNumeric(secondNumber))
+            {
                 var sum = ConvertToDecimal(firstNumber) + ConvertToDecimal(secondNumber);
                 return Ok(sum);
             }
-            
-            
+
+
             return BadRequest("Invalid Input");
         }
-        private decimal ConvertToDecimal(string strNumber)
+
+        [HttpGet("substract/{firstNumber}/{secondNumber}")]
+        public IActionResult Substract(string firstNumber, string secondNumber)
         {
-            decimal decimalValue;
-            if (decimal.TryParse(
-                 strNumber,
-                 System.Globalization.NumberStyles.Any,
-                 System.Globalization.NumberFormatInfo.InvariantInfo,
-                 out decimalValue)
-                )
+            if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
             {
-                return decimalValue;
+                var substr = ConvertToDecimal(firstNumber) - ConvertToDecimal(secondNumber);
+                return Ok(substr);
             }
-            return 0;
+
+            return BadRequest("Invalid Input");
         }
 
-        private bool IsNumeric(string strNumber)
+        [HttpGet("division/{firstNumber}/{secondNumber}")]
+        public IActionResult DivisionGet(string firstNumber, string secondNumber)
         {
-            decimal decimalValue;
-            bool isNumber = decimal.TryParse(
-                strNumber,
-                System.Globalization.NumberStyles.Any,
-                System.Globalization.NumberFormatInfo.InvariantInfo,
-                out decimalValue
-                );
+            if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
+            {
+                var division = ConvertToDecimal(firstNumber) / ConvertToDecimal(secondNumber);
+                return Ok(division);
+            }
 
-            return isNumber;
+            return BadRequest("Invalid Input");
+        }
+
+        [HttpGet("multiplication/{firstNumber}/{secondNumber}")]
+        public IActionResult MultiplicationGet(string firstNumber, string secondNumber)
+        {
+            if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
+            {
+                var multiplication = ConvertToDecimal(firstNumber) * ConvertToDecimal(secondNumber);
+                return Ok(multiplication);
+            }
+
+            return BadRequest("Invalid Input");
+        }
+
+        [HttpGet("average/{firstNumber}/{secondNumber}")]
+        public IActionResult AverageGet(string firstNumber, string secondNumber)
+        {
+            if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
+            {
+                var average = (ConvertToDecimal(firstNumber) + ConvertToDecimal(secondNumber)) / 2;
+                return Ok(average);
+            }
+
+            return BadRequest("Invalid Input");
+        }
+
+        [HttpGet("squareRoot/{firstNumber}")]
+        public IActionResult SquareRootGet(string firstNumber)
+        {
+            if (IsNumeric(firstNumber) )
+            {
+                var num = ConvertToDecimal(firstNumber);
+                var squareRoot = Math.Sqrt((double)num);
+                return  Ok(squareRoot);
+            }
+
+            return BadRequest("Invalid Input");
         }
     }
 }
