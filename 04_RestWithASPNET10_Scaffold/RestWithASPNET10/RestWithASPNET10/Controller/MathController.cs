@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
-using RestWithASPNET10.Controller.Convert;
+using RestWithASPNET10.Utils;
 
 namespace RestWithASPNET10.Controller
-{
+{   
     [ApiController]
     [Route("[controller]")]
     public class MathController : ControllerBase
@@ -11,12 +11,11 @@ namespace RestWithASPNET10.Controller
         [HttpGet("sum/{firstNumber}/{secondNumber}")]
         public IActionResult SumGet(string firstNumber, string secondNumber)
         {
-            if (Convert.IsNumeric(firstNumber) && IsNumeric(secondNumber))
+            if (NumberHelper.IsNumeric(firstNumber) && NumberHelper.IsNumeric(secondNumber))
             {
-                var sum = ConvertToDecimal(firstNumber) + ConvertToDecimal(secondNumber);
+                var sum = NumberHelper.ConvertToDecimal(firstNumber) + NumberHelper.ConvertToDecimal(secondNumber);
                 return Ok(sum);
             }
-
 
             return BadRequest("Invalid Input");
         }
@@ -24,9 +23,9 @@ namespace RestWithASPNET10.Controller
         [HttpGet("substract/{firstNumber}/{secondNumber}")]
         public IActionResult Substract(string firstNumber, string secondNumber)
         {
-            if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
+            if (NumberHelper.IsNumeric(firstNumber) && NumberHelper.IsNumeric(secondNumber))
             {
-                var substr = ConvertToDecimal(firstNumber) - ConvertToDecimal(secondNumber);
+                var substr = NumberHelper.ConvertToDecimal(firstNumber) - NumberHelper.ConvertToDecimal(secondNumber);
                 return Ok(substr);
             }
 
@@ -36,9 +35,9 @@ namespace RestWithASPNET10.Controller
         [HttpGet("division/{firstNumber}/{secondNumber}")]
         public IActionResult DivisionGet(string firstNumber, string secondNumber)
         {
-            if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
+            if (NumberHelper.IsNumeric(firstNumber) && NumberHelper.IsNumeric(secondNumber))
             {
-                var division = ConvertToDecimal(firstNumber) / ConvertToDecimal(secondNumber);
+                var division = NumberHelper.ConvertToDecimal(firstNumber) / NumberHelper.ConvertToDecimal(secondNumber);
                 return Ok(division);
             }
 
@@ -48,9 +47,9 @@ namespace RestWithASPNET10.Controller
         [HttpGet("multiplication/{firstNumber}/{secondNumber}")]
         public IActionResult MultiplicationGet(string firstNumber, string secondNumber)
         {
-            if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
+            if (NumberHelper.IsNumeric(firstNumber) && NumberHelper.IsNumeric(secondNumber))
             {
-                var multiplication = ConvertToDecimal(firstNumber) * ConvertToDecimal(secondNumber);
+                var multiplication = NumberHelper.ConvertToDecimal(firstNumber) * NumberHelper.ConvertToDecimal(secondNumber);
                 return Ok(multiplication);
             }
 
@@ -60,21 +59,20 @@ namespace RestWithASPNET10.Controller
         [HttpGet("average/{firstNumber}/{secondNumber}")]
         public IActionResult AverageGet(string firstNumber, string secondNumber)
         {
-            if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
+            if (NumberHelper.IsNumeric(firstNumber) && NumberHelper.IsNumeric(secondNumber))
             {
-                var average = (ConvertToDecimal(firstNumber) + ConvertToDecimal(secondNumber)) / 2;
+                var average = (NumberHelper.ConvertToDecimal(firstNumber) + NumberHelper.ConvertToDecimal(secondNumber)) / 2;
                 return Ok(average);
             }
-
             return BadRequest("Invalid Input");
         }
 
         [HttpGet("squareRoot/{firstNumber}")]
         public IActionResult SquareRootGet(string firstNumber)
         {
-            if (IsNumeric(firstNumber) )
+            if (NumberHelper.IsNumeric(firstNumber) )
             {
-                var num = ConvertToDecimal(firstNumber);
+                var num = NumberHelper.ConvertToDecimal(firstNumber);
                 var squareRoot = Math.Sqrt((double)num);
                 return  Ok(squareRoot);
             }
