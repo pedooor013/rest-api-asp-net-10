@@ -29,7 +29,7 @@ public class PersonServicesImpl : IPersonServices
 
     public Person Update(Person person)
     {
-        throw new NotImplementedException();
+        return person;
     }
 
     public void Delete(long id)
@@ -41,9 +41,9 @@ public class PersonServicesImpl : IPersonServices
         var person = new Person
         {
             Id = new Random().Next(1, 1000),
-            FirstName = "Pedro" + i,
-            LastName = "Lopes" + i,
-            Address = "123 Main Street" + i,
+            FirstName = "Pedro " + i,
+            LastName = "Lopes " + i,
+            Address = "123 Main Street " + i,
             Gender = "Male"
         };
         return person;
