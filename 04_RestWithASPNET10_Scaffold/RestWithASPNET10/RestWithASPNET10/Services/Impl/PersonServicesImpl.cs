@@ -1,4 +1,5 @@
-﻿using RestWithASPNET10.Model;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using RestWithASPNET10.Model;
 
 namespace RestWithASPNET10.Services.Impl;
 
@@ -34,7 +35,6 @@ public class PersonServicesImpl : IPersonServices
 
     public void Delete(long id)
     {
-        throw new NotImplementedException();
     }
     private Person MockPerson(int i)
     {
