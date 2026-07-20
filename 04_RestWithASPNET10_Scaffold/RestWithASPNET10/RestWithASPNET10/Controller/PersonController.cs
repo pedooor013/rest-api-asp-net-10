@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿    using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASPNET10.Model;
 using RestWithASPNET10.Services;
@@ -41,10 +41,10 @@ namespace RestWithASPNET10.Controller
             if (createdPerson == null) return NotFound();
             return Ok(createdPerson);
         }
-        [HttpPut ]
+        [HttpPut]
         public IActionResult Put([FromBody] Person person)
         {
-            var createdPerson = _personService.Create(person);
+            var createdPerson = _personService.Update(person);
             if (createdPerson == null) return NotFound();
             return Ok(createdPerson);
         }

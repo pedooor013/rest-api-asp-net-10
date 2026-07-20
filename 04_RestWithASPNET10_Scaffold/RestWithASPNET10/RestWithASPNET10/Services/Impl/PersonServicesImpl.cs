@@ -1,51 +1,53 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using RestWithASPNET10.Model;
+using RestWithASPNET10.Model.Context;
 
 namespace RestWithASPNET10.Services.Impl;
 
 public class PersonServicesImpl : IPersonServices
 {
+    private MSSQLContext _context;
+
+    public PersonServicesImpl(MSSQLContext context)
+    {
+        _context = context;
+    } 
+    public List<Person> FindAll()
+    { 
+        return _context.People.ToList();
+    }  
     public Person FindById(long id)
     {
-        var person = MockPerson((int)id);
-        return person;
+        return _context.People.Find(id);
     }
 
 
-    public List<Person> FindAll()
-    {
-        List<Person> people = new List<Person>();
-        for (int i = 0; i < 10; i++)
-        {
-            people.Add(MockPerson(i));
-        }
-        return people;
-    }  
 
     public Person Create(Person person)
     {
-        person.Id = new Random().Next(1, 1000);
+        _context.Add(person);
+        _context.SaveChanges();
         return person;
     }
 
     public Person Update(Person person)
     {
+        var existingPerson = _context.People.Find(person.Id);
+        if (existingPerson == null) return null;
+
+        _context.Entry(existingPerson).CurrentValues.SetValues(person);
+        _context.SaveChanges();
         return person;
     }
 
     public void Delete(long id)
     {
+        var existingPerson = _context.People.Find(id);
+
+        if (existingPerson == null) throw new KeyNotFoundException("Person.Id not exist in DB!");
+
+        _context.Remove(existingPerson);
+        _context.SaveChanges();
     }
-    private Person MockPerson(int i)
-    {
-        var person = new Person
-        {
-            Id = new Random().Next(1, 1000),
-            FirstName = "Pedro " + i,
-            LastName = "Lopes " + i,
-            Address = "123 Main Street " + i,
-            Gender = "Male"
-        };
-        return person;
-    }
+   
 }
